@@ -27,6 +27,7 @@ public class SearchFragment extends Fragment implements Button.OnClickListener{
     private LinearLayout removeButtonLayout;
     private Vector<Button> removeButtons;
     private TextView faultMessage;
+    private Button loadButton;
     public SearchFragment() {
 
     }
@@ -41,7 +42,9 @@ public class SearchFragment extends Fragment implements Button.OnClickListener{
         this.removeButtonLayout = (LinearLayout) view.findViewById(R.id.removeButtonLayout);
         this.removeButtons = new Vector<>();
         this.faultMessage = (TextView) view.findViewById(R.id.faultMessage);
+        this.loadButton = (Button) view.findViewById(R.id.LoadButton);
         this.addNewCourses.setOnClickListener(this);
+        this.loadButton.setOnClickListener(this);
         return view;
     }
 
@@ -64,23 +67,35 @@ public class SearchFragment extends Fragment implements Button.OnClickListener{
                 this.removeButtonLayout.addView(this.removeButtons.get(this.removeButtons.size()-1));
                 this.removeButtons.elementAt(this.removeButtons.size()-1).setOnClickListener(this);
                 this.newCourses.setText("");
+                this.faultMessage.setText("");
+            }else{
+                this.faultMessage.setText("Cant add empty line");
             }
 
+        }
+
+        if(v == this.loadButton){
+            this.faultMessage.setText("Not yet implimented");
         }
 
         for(int i = 0; i < this.removeButtons.size(); i++){
             if(v == this.removeButtons.elementAt(i)){
                 String list = this.courseList.getText().toString();
                 String[] listArray = list.split("\n");
-                listArray[i] = "";
                 list = "";
                 for(int j = 0; j < this.removeButtons.size(); j++){
-                    list += listArray[j] + " ";
+                    if(j != i){
+                        list += listArray[j] + "\n";
+                    }
                 }
-                this.courseList.setText(list);
-
                 this.removeButtonLayout.removeView(this.removeButtons.elementAt(i));
                 this.removeButtons.remove(i);
+                if(this.removeButtons.size() > 0){
+                    list = list.substring(0, list.length()-1);
+                }
+                this.courseList.setText(list);
+                this.faultMessage.setText("");
+
             }
         }
     }

@@ -44,7 +44,9 @@
             android:layout_weight="1"
             android:textAlignment="center"
             android:textSize="18sp"
-            android:textStyle="normal|bold" />
+            android:textStyle="normal|bold"
+            android:lineSpacingExtra="27sp"
+            android:layout_marginTop="10dp" />
 
         <LinearLayout
             android:orientation="vertical"
