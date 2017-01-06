@@ -1,13 +1,14 @@
 package mobilecourse.sapp;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcel;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity
@@ -126,7 +127,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void changeFragments(String changeTo) {
+    public void fragmentChange(String changeTo) {
         if(changeTo == "search"){
             SearchFragment fragment = new SearchFragment();
             android.support.v4.app.FragmentTransaction fragmentTransaction =
@@ -149,6 +150,15 @@ public class MainActivity extends AppCompatActivity
             fragmentTransaction.commit();
             navigationView.getMenu().getItem(2).setChecked(true);
         }
+    }
+
+    @Override
+    public void changeActivity(scheduleInformation schedule){
+
+        Intent intent = new Intent(this,swipeActivity.class);
+        intent.putExtra("schedule", schedule);
+        startActivity(intent);
+
     }
 }
 

@@ -29,7 +29,7 @@ public class SearchFragment extends Fragment implements Button.OnClickListener{
     private TextView faultMessage;
     private Button loadButton;
     public SearchFragment() {
-
+        // Required empty public constructor
     }
 
 
@@ -63,7 +63,6 @@ public class SearchFragment extends Fragment implements Button.OnClickListener{
                 this.removeButtons.get(this.removeButtons.size()-1).setTextColor(Color.parseColor("#FF0000"));
                 this.removeButtons.get(this.removeButtons.size()-1).setText("X");
                 this.removeButtons.get(this.removeButtons.size()-1).setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
-                this.removeButtons.get(this.removeButtons.size()-1).setHeight(10);
                 this.removeButtonLayout.addView(this.removeButtons.get(this.removeButtons.size()-1));
                 this.removeButtons.elementAt(this.removeButtons.size()-1).setOnClickListener(this);
                 this.newCourses.setText("");
@@ -75,7 +74,7 @@ public class SearchFragment extends Fragment implements Button.OnClickListener{
         }
 
         if(v == this.loadButton){
-            this.faultMessage.setText("Not yet implimented");
+            System.out.println(this.courseList.getText());
         }
 
         for(int i = 0; i < this.removeButtons.size(); i++){

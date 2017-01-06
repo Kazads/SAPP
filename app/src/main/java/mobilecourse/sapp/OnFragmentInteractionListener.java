@@ -5,5 +5,7 @@ package mobilecourse.sapp;
  */
 
 public interface OnFragmentInteractionListener {
-    void changeFragments(String changeTo);
+    void fragmentChange(String changeTo);
+
+    void changeActivity(scheduleInformation schedule);
 }
