@@ -16,6 +16,8 @@ public class scheduleInformation implements Parcelable{
     private String date;
     private String startTime;
     private String endTime;
+    private int followGenSett;
+    private int notifications;
     private int notificationTimer;
     private int muted;
 
@@ -28,12 +30,14 @@ public class scheduleInformation implements Parcelable{
         this.date = "";
         this.startTime = "";
         this.endTime = "";
-        this.notificationTimer=0;
+        this.followGenSett = 1;
+        this.notifications = 1;
+        this.notificationTimer=15;
         this.muted=1;
 
     }
 
-    public scheduleInformation(String course, String person, String room, String text, String date, String startTime, String endTime){
+    public scheduleInformation(String course, String person, String room, String text, String date, String startTime, String endTime,int followGenSett, int notifications ,int notificationTimer, int muted){
         this.course = course;
         this.person = person;
         this.room = room;
@@ -41,24 +45,36 @@ public class scheduleInformation implements Parcelable{
         this.date = date;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.notificationTimer = 15;
-        this.muted = 1;
+        this.followGenSett = followGenSett;
+        this.notifications = notifications;
+        this.notificationTimer = notificationTimer;
+        this.muted = muted;
     }
 
 
 
     //Get-Functions
-    public String getCourse(){
+    public String getCourseSmall(){
         String returnValue = this.course;
         if(this.course.indexOf(",")!= -1){
             returnValue = this.course.substring(0,this.course.indexOf(","));
         }
         return returnValue;
     }
+    public String getCourseFull(){
+        return this.course;
+    }
     public String getPerson(){
         return this.person;
     }
-    public String getRoom(){
+    public String getRoomSmall(){
+        String returnValue = this.course;
+        if(this.room.indexOf("Gradängsal") != -1){
+            returnValue = this.room.substring(10, this.room.length());
+        }
+        return returnValue;
+    }
+    public String getRoomFull(){
         return this.room;
     }
     public String getText(){
@@ -73,6 +89,8 @@ public class scheduleInformation implements Parcelable{
     public String getEndTime(){
         return this.endTime;
     }
+    public int getFollowGenSett(){return this.followGenSett;}
+    public int getNotifications(){return this.notifications;}
     public int getNotificationTimer(){return this.notificationTimer;}
     public int getMuted(){return this.muted;}
 
@@ -98,13 +116,17 @@ public class scheduleInformation implements Parcelable{
     public void setEndTime(String endTime){
         this.endTime = endTime;
     }
+    public void setFollowGenSett(int genSett){this.followGenSett = genSett;}
+    public void setNotifications(int notifications){this.notifications = notifications;}
     public void setNotificationTimer(int timer){this.notificationTimer = timer;}
     public void setMuted(int muted){this.muted = muted;}
 
     public String toString(){
         String returnString = "";
-        returnString += "Course: "+this.course+"\nPerson: "+this.person+"\nRoom: "+this.room;
-        returnString += "\nText: "+this.text+"\nDate: "+this.date+"\nStartTime: "+this.startTime+"\nEndtime: "+this.endTime;
+        returnString += "Course:\n"+this.course+"\nTeacher:\n"+this.person+"\nRoom:\n"+this.room;
+        returnString += "\nInfo:\n"+this.text+"\nDate:\n"+this.date+"\nStart time:\n"+this.startTime+"\nEnd time:\n"+this.endTime;
+        //returnString += "\nFollow General Settings: "+ this.followGenSett + "\nNotifications: " + this.notifications;
+        //returnString += "\nNotificationTimer: " + this.notificationTimer + "\nMuted" + this.muted;
         return returnString;
     }
 
@@ -121,6 +143,8 @@ public class scheduleInformation implements Parcelable{
         this.date = parcel.readString();
         this.startTime = parcel.readString();
         this.endTime = parcel.readString();
+        this.followGenSett = parcel.readInt();
+        this.notifications = parcel.readInt();
         this.notificationTimer = parcel.readInt();
         this.muted = parcel.readInt();
     }
@@ -139,6 +163,8 @@ public class scheduleInformation implements Parcelable{
         parcel.writeString(this.date);
         parcel.writeString(this.startTime);
         parcel.writeString(this.endTime);
+        parcel.writeInt(this.followGenSett);
+        parcel.writeInt(this.notifications);
         parcel.writeInt(this.notificationTimer);
         parcel.writeInt(this.muted);
     }

@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 
 /**
@@ -13,7 +14,7 @@ import android.view.ViewGroup;
  */
 public class specInfoFragment extends Fragment {
     private scheduleInformation scheduleInformation;
-
+    private TextView specInfo;
 
     public specInfoFragment() {
         // Required empty public constructor
@@ -31,6 +32,8 @@ public class specInfoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.spec_info, container, false);
         this.scheduleInformation = getArguments().getParcelable("schedule");
+        this.specInfo = (TextView) view.findViewById(R.id.specInfo);
+        this.specInfo.setText(this.scheduleInformation.toString());
         return view;
     }
 

@@ -1,5 +1,6 @@
 package mobilecourse.sapp;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -20,7 +21,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-public class swipeActivity extends AppCompatActivity {
+public class swipeActivity extends AppCompatActivity implements onSwipeFragmentInteractionListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -57,7 +58,6 @@ public class swipeActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         this.lecture = (scheduleInformation) intent.getParcelableExtra("schedule");
-        System.out.println(this.lecture.getCourse());
         this.backButton = (ImageButton) findViewById(R.id.backFromSpec);
         this.backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,5 +126,11 @@ public class swipeActivity extends AppCompatActivity {
             }
             return null;
         }
+    }
+
+    public void closeActivity(){
+        System.out.println("Check!");
+        setResult(Activity.RESULT_OK);
+        finish();
     }
 }
