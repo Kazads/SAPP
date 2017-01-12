@@ -11,6 +11,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Vector;
 
 
@@ -49,40 +51,44 @@ public class showFragment extends Fragment {
         }
         this.scheduleGUI = new Vector<>();
         View box;
-        TextView date;
+        TextView dateText;
         TextView course;
         TextView time;
         TextView room;
         Vector<String> dates = new Vector<>();
-        for(int i = 0; i < schedule.size(); i++){
-            if(dates.indexOf(this.schedule.get(i).getDate()) == -1){
-                dates.add(this.schedule.get(i).getDate());
-                box = inflater.inflate(R.layout.show_date, container,false);
-                date = (TextView) box.findViewById(R.id.showDate);
-                date.setText(this.schedule.get(i).getDate());
-                this.showLayout.addView(box);
-                System.out.println("First Check");
-                for(int j = 0; j < schedule.size(); j++){
-                    System.out.println("Second Check");
-                    if(this.schedule.get(j).getDate().equals(this.schedule.get(i).getDate())){
-                        System.out.println("Third Check");
-                        box = inflater.inflate(R.layout.show_post, container,false);
-                        course = (TextView) box.findViewById(R.id.showCourse);
-                        time = (TextView) box.findViewById(R.id.showTime);
-                        room = (TextView) box.findViewById(R.id.showRoom);
-                        course.setText(this.schedule.elementAt(i).getCourseSmall());
-                        time.setText(this.schedule.elementAt(i).getStartTime());
-                        room.setText(this.schedule.elementAt(i).getRoomSmall());
-                        this.scheduleGUI.add(box);
-                        this.showLayout.addView(this.scheduleGUI.elementAt(scheduleGUI.size()-1));
-                        this.scheduleGUI.elementAt(this.scheduleGUI.size()-1).setOnClickListener(onClickListener);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date now = new Date();
+        String strDate = sdf.format(now);
+        try{
+            Date today = sdf.parse(strDate);
+            for(int i = 0; i < schedule.size(); i++){
+                Date date = sdf.parse(this.schedule.get(i).getDate());
+                if(dates.indexOf(this.schedule.get(i).getDate()) == -1 && today.compareTo(date) <= 0){
+                    dates.add(this.schedule.get(i).getDate());
+                    box = inflater.inflate(R.layout.show_date, container,false);
+                    dateText = (TextView) box.findViewById(R.id.showDate);
+                    dateText.setText(this.schedule.get(i).getDate());
+                    this.showLayout.addView(box);
+                    for(int j = 0; j < schedule.size(); j++){
+                        if(this.schedule.get(j).getDate().equals(this.schedule.get(i).getDate())){
+                            box = inflater.inflate(R.layout.show_post, container,false);
+                            course = (TextView) box.findViewById(R.id.showCourse);
+                            time = (TextView) box.findViewById(R.id.showTime);
+                            room = (TextView) box.findViewById(R.id.showRoom);
+                            course.setText(this.schedule.elementAt(i).getCourseSmall());
+                            time.setText(this.schedule.elementAt(i).getStartTime());
+                            room.setText(this.schedule.elementAt(i).getRoomSmall());
+                            this.scheduleGUI.add(box);
+                            this.showLayout.addView(this.scheduleGUI.elementAt(scheduleGUI.size()-1));
+                            this.scheduleGUI.elementAt(this.scheduleGUI.size()-1).setOnClickListener(onClickListener);
+                        }
                     }
                 }
             }
+        }catch(Exception e){
+            System.out.println(e.toString());
         }
-        for(int i = 0; i < dates.size(); i++){
-            System.out.println(dates.get(i));
-        }
+
         return view;
     }
 
